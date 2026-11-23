@@ -1,0 +1,7 @@
+/build/
+/cmake-build-*/
+/.vs/
+/out/
+*.obj
+*.exe
+*.pdb
