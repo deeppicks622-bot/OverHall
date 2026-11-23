@@ -6,8 +6,10 @@ Leonida project.
 
 ## Status
 
-**Planning prototype. Nothing is playable yet.** This repository currently contains only an original build skeleton
-and architecture notes. It does not contain a game executable, game assets, shaders, keys, or generated game data.
+**Early research prototype. Nothing is playable.** OverHall currently contains a bounds-checked, offline inspector for
+AMD64 PE32+ headers and section metadata, plus tests built from synthetic byte arrays. It is not an Xbox/XEX parser,
+game loader, emulator, or PC port. The repository contains no game executable, game assets, shaders, keys, or generated
+game data.
 
 ## Project boundaries
 
@@ -19,23 +21,30 @@ and architecture notes. It does not contain a game executable, game assets, shad
 
 ## Initial milestones
 
-1. Establish a reproducible native build and synthetic test harness.
-2. Implement and test a small PE image loader using generated test images.
-3. Add only well-understood offline platform APIs, each with focused tests.
-4. Build a graphics compatibility layer and validate it with synthetic workloads.
-5. Investigate shader translation using hand-written inputs and documented hardware behavior.
-6. Attempt any local title-specific validation only when the required tools and an authorized local copy are available.
+1. Keep the synthetic test harness and parser bounds checks reproducible.
+2. Document platform container formats before considering any additional offline metadata reader.
+3. Add only well-understood APIs, each with focused tests and explicit unsupported cases.
+4. Explore graphics and shader behavior only through documented interfaces and synthetic workloads.
+5. Keep compatibility research separate from claims of title support or playability.
 
 ## Build
 
-The initial prototype needs a C++20 compiler and CMake:
+The original C++ smoke target needs a C++20 compiler and CMake:
 
 ```powershell
 cmake -S . -B build
 cmake --build build --config Release
 ```
 
-The current executable is only a build smoke target; it does not load or run a game.
+The current C++ executable is only a build smoke target. The PE inspector uses Python 3.10+ and no runtime dependencies:
+
+```powershell
+python -m unittest discover -s tests -v
+python -m overhall inspect path-to-pe32plus.exe
+```
+
+See [PE32+ inspection scope](docs/PE_FORMAT.md) and the [engineering roadmap](docs/ROADMAP.md) for current limits and
+next gates.
 
 ## License
 
