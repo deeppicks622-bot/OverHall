@@ -1,12 +1,14 @@
 # Initial architecture
 
-OverHall starts as a clean-room implementation. The modules below are planned boundaries, not claims that the work is
-already implemented.
+OverHall is a clean-room research prototype. The PE32+ metadata inspector is implemented; the remaining modules below
+are planned boundaries, not claims that the work is already implemented.
 
 ## Components
 
-- **Image loader** — parse and map PE images in synthetic tests, then resolve imports through an explicit offline
-  registry. Unknown imports must fail with a useful diagnostic instead of silently returning success.
+- **Format inspection** — the current `overhall.pe` module reads a narrow set of AMD64 PE32+ headers and maps file-backed
+  RVAs. It is inspection only; it does not map or execute an image. Xbox-specific formats are not supported.
+- **Future image loader** — only consider after platform, ABI, and safety requirements are documented. Any future loader
+  must use synthetic images and an explicit offline registry; unknown imports must fail with useful diagnostics.
 - **Platform layer** — implement only documented local APIs. Each shim records its supported behavior and has a
   synthetic unit test.
 - **Shader translator** — translate documented instruction behavior from hand-written fixtures. Unsupported forms
